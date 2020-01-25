@@ -22,7 +22,7 @@ for i in array {
 array
 
 //задание 5*
-func fib(_ n:Int) -> [Decimal] {//без Decimal - считает только до 90 чисел в последовательности
+func fib(_ n: Int) -> [Decimal] {//без Decimal - считает только до 90 чисел в последовательности
     var arr: [Decimal] = []
     var a: Decimal = 0
     var b: Decimal = 1
