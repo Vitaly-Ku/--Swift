@@ -1,10 +1,10 @@
 import UIKit
 
 enum EngineMode {
-    case start // для родителя Car работает метод смены режима двигателя start/stop
-    case stop // для родителя Car работает метод смены режима двигателя start/stop
-    case turboOn // для наследника SportCar добавляется перегруженный метод выбора турбо режима
-    case turboOff // для наследника SportCar добавляется перегруженный метод выбора турбо режима
+    case start
+    case stop
+    case turboOn
+    case turboOff
 }
 
 enum WindowsMode {
@@ -12,7 +12,7 @@ enum WindowsMode {
     case close
 }
 
-enum TrailerMode {//для TrunkCar - отцепить/прицепить прицеп
+enum TrailerMode {
     case unhook
     case hook
 }
@@ -54,9 +54,13 @@ final class SportCar : Car {
     
     let turboAccelerator: Bool // новое свойство наследника
     
-    func turboModeChange(_ mode: EngineMode) { // перегруженный метод выбора турбо режима
-        self.engineMode = mode
-        print("Двигатель в режиме \(mode)")
+    override func engineModeChange() { // переписааный метод родителя, в который добавлены 2 состояния двигателя turboOn/turboOff
+        switch self.engineMode {
+        case .stop: self.engineMode = .start
+        case .start: self.engineMode = .turboOn
+        case .turboOn: self.engineMode = .turboOff
+        case .turboOff: self.engineMode = .stop
+        }
     }
 
     init(release: Int, trunk: Double, doorCount: Int, maxSpeed: Int, color: String, windowsMode: WindowsMode, turboAccelerator: Bool) {
@@ -74,11 +78,11 @@ car1.engineModeChange() // только автоматически включа�
 car1.engineMode
 
 sportCar1.engineMode
-sportCar1.engineModeChange() // метод родителя (без аргументов) - вкл/выкл мотор
+sportCar1.engineModeChange()
 sportCar1.engineMode
-sportCar1.turboModeChange(.turboOn) // метод наследника (с аргументом) - выбирает режим турбо (on/off)
+sportCar1.engineModeChange()
 sportCar1.engineMode
-sportCar1.turboModeChange(.turboOff)
+sportCar1.engineModeChange()
 sportCar1.engineMode
 sportCar1.engineModeChange()
 sportCar1.engineMode
